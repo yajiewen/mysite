@@ -14,7 +14,9 @@
               </p>
               &nbsp;&nbsp;公众号
               <img class="image is-128x128" src="../assets/studyscan.jpg">
-              &nbsp;&nbsp;<a v-on:click="openstusy">前往平台</a>
+              &nbsp;&nbsp;<a style="color:info" v-on:click="openstusy">前往平台</a>
+              &nbsp;&nbsp;<a style="color:info" v-on:click="openstusyFront">前端代码分享</a>
+              &nbsp;&nbsp;<a style="color:info" v-on:click="openstusyBackend">后端代码分享</a>
             </div>
 
             <div class="block">
@@ -24,18 +26,18 @@
                 2.将打标人员打标的人工题目存入数据库,然后留出获取题目的接口<br/>
                 3.对从知识图谱里面获取的知识,返回题目
               </p>
-              <a v-on:click="gotoTimuPage">事故案例题目展示</a>
+              <a style="color:info" v-on:click="gotoTimuPage">事故案例题目展示</a>
             </div>
 
             <div class="block">
               <h2>聚合支付系统</h2>
               <p>该系统集合支付宝支付和微信支付包含各种支付接口,通过http请求调用,代码在申请软著后开放</p>
-              <a v-on:click="openpaysys">文档</a>
+              <a style="color:info" v-on:click="openpaysys">文档</a>
             </div>
 
             <div class="block">
               <h2>厦大商圈微信小程序</h2>
-              <p>聚合厦大周围商家,用户,商家可以店铺信息,个人发布商品信息</p>
+              <p>聚合厦大周围商家,用户,商家可以店铺信息,个人发布商品信息......</p>
             </div>
 
           </div>
@@ -53,6 +55,12 @@ export default {
     Navbar,
   },
   methods:{
+    openstusyBackend(){
+ window.open('https://github.com/yajiewen/StudyBackend')
+    },
+    openstusyFront(){
+ window.open('https://github.com/yajiewen/StudyFront')
+    },
     openpaysys(){
       window.open('../../paysys.html')
     },

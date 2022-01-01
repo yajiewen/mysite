@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 /dist
+/public/typora-user-images
 
 
 # local env files

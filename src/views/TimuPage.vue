@@ -1,7 +1,15 @@
 <template>
   <div id="TimuPage">
     <div class="box">
-      文本 案例
+      <p>文本 案例</p>
+      <div v-on:click="getAnli" class="button">
+        <span class="icon-text">
+          <span class="icon">
+            <i class="fas fa-cloud-download-alt"></i>
+          </span>
+          <span>获取案例</span>
+        </span>
+      </div>
       <textarea
         class="textarea"
         placeholder="10 lines of textarea"
@@ -12,7 +20,6 @@
     <div class="box">
       <div class="columns">
         <div class="column">提取信息</div>
-        <div class="column"></div>
       </div>
       <div v-on:click="showInfo" class="button">
         <span class="icon-text">
@@ -142,12 +149,16 @@
           <span>生成</span>
         </span>
       </div>
-      <div class="block" v-for="(timu,index) in timulist" v-bind:key="index">
-          <p>{{index+1}}. {{timu.subject}}</p>
-          <p>A:{{timu.rightAnswer}}</p>
-          <p>B:{{timu.wrongAnswer1}}</p>
-          <p v-if="timu.hasOwnProperty('wrongAnswer2')">C:{{timu.wrongAnswer2}}</p>
-          <p v-if="timu.hasOwnProperty('wrongAnswer3')">D:{{timu.wrongAnswer3}}</p>
+      <div class="block" v-for="(timu, index) in timulist" v-bind:key="index">
+        <p>{{ index + 1 }}. {{ timu.subject }}</p>
+        <p>A:{{ timu.rightAnswer }}</p>
+        <p>B:{{ timu.wrongAnswer1 }}</p>
+        <p v-if="timu.hasOwnProperty('wrongAnswer2')">
+          C:{{ timu.wrongAnswer2 }}
+        </p>
+        <p v-if="timu.hasOwnProperty('wrongAnswer3')">
+          D:{{ timu.wrongAnswer3 }}
+        </p>
       </div>
     </div>
   </div>
@@ -171,15 +182,23 @@ export default {
       dealway1: "",
       showinfo: false,
       timudict: {},
-      timulist:[],
+      timulist: [],
     };
   },
   methods: {
     showInfo() {
       this.showinfo = !this.showinfo;
     },
+    getAnli() {
+      axios({
+        method: "get",
+        url: "/api/anli",
+      }).then((res) => {
+        this.text = res.data;
+      });
+    },
     getTimu() {
-        this.timulist = []
+      this.timulist = [];
       let upaxios = axios.create({
         headers: {
           "Content-Type": "multipart/form-data",
@@ -190,24 +209,22 @@ export default {
           },
         ],
       });
-      let formdata = new FormData()
+      let formdata = new FormData();
       formdata.append("text", this.text);
       upaxios.post("/api/quesgetter", formdata).then((res) => {
         this.timudict = res.data;
-        for(let key in this.timudict){
-
-            if(key == "case"){
-                let caseObj = this.timudict[key]
-                for(let key1 in caseObj){
-                    this.timulist.push(...caseObj[key1])
-                }
-            }else{
-                let tiObj = this.timudict[key]
-                for(let key2 in tiObj){
-                    this.timulist.push(tiObj[key2])
-                }
+        for (let key in this.timudict) {
+          if (key == "case") {
+            let caseObj = this.timudict[key];
+            for (let key1 in caseObj) {
+              this.timulist.push(...caseObj[key1]);
             }
-
+          } else {
+            let tiObj = this.timudict[key];
+            for (let key2 in tiObj) {
+              this.timulist.push(tiObj[key2]);
+            }
+          }
         }
       });
     },

@@ -25,8 +25,8 @@
       <div class="navbar-end">
         <a class="navbar-item" v-on:click="goToHome">主页</a>
         <a class="navbar-item" v-on:click="goToProjects">项目</a>
-        <a class="navbar-item">荣誉</a>
-        <a class="navbar-item">我的笔记</a>
+        <a class="navbar-item" v-on:click="goToHonor">荣誉</a>
+        <a class="navbar-item" v-on:click="goToNotes">我的笔记</a>
       </div>
     </div>
   </nav>
@@ -44,6 +44,12 @@ export default {
   methods: {
     turnactive() {
       this.isactive = !this.isactive;
+    },
+    goToNotes(){
+      this.$router.push('/notes')
+    },
+    goToHonor(){
+      this.$router.push('/honor')
     },
     goToHome(){
       this.$router.push("/")
